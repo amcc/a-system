@@ -22,9 +22,11 @@ function draw() {
 
   // makeGrids();
 
-  randomFineShape(22, gap * 1.6, [255, 0, 255, opacity]);
+  randomFineShape(13, gap * 1.6, [255, 0, 255, opacity]);
   randomHorizLine(5, bigGap * 1.3, [255, 255, 0], opacity);
   randomVertLine(8, bigGap * 1.1, [0, 255, 255, opacity]);
+
+  randomFineShape(8, gap * 0.6, [0, opacity]);
 
   noLoop();
 }
