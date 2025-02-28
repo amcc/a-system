@@ -1,6 +1,7 @@
 const gridSize = 10;
 const ranLength = [0.5, 1, 2];
 const marginPercentage = 0.9;
+const opacity = 210;
 let bigGap, gap, shunt, minDim;
 
 function setup() {
@@ -21,9 +22,9 @@ function draw() {
 
   // makeGrids();
 
-  randomFineShape(22, gap * 1.6, [255, 0, 255]);
-  randomHorizLine(5, bigGap * 1.3, [255, 255, 0]);
-  randomVertLine(8, bigGap * 1.1, [0, 255, 255]);
+  randomFineShape(22, gap * 1.6, [255, 0, 255, opacity]);
+  randomHorizLine(5, bigGap * 1.3, [255, 255, 0], opacity);
+  randomVertLine(8, bigGap * 1.1, [0, 255, 255, opacity]);
 
   noLoop();
 }
