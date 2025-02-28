@@ -1,20 +1,28 @@
 const gridSize = 10;
-const ranLength = [0.5, 1, 2];
+const ranLength = [0, 1, 2];
 const marginPercentage = 0.9;
 const opacity = 210;
-let bigGap, gap, shunt, minDim;
+const mg = [255, 0, 255, opacity];
+const cy = [0, 255, 255, opacity];
+const yl = [255, 255, 0, opacity];
+const colours = [mg, cy, yl];
+let bigGap, gap, shunt, minDim, cnv, bottomCnv, topCnv, sc;
 
 function setup() {
   minDim = min(windowWidth, windowHeight) * marginPercentage;
   createCanvas(minDim, minDim);
+  bottomCnv = createGraphics(minDim, minDim);
+  topCnv = createGraphics(minDim, minDim);
   setSizes();
-  blendMode(MULTIPLY);
+  bottomCnv.blendMode(MULTIPLY);
+  topCnv.blendMode(BLEND);
 }
 
 function setSizes() {
   bigGap = (width / gridSize) * 2;
   gap = width / gridSize;
   shunt = gap / 2;
+  sc = shuffle(colours);
 }
 
 function draw() {
@@ -22,35 +30,38 @@ function draw() {
 
   // makeGrids();
 
-  randomFineShape(13, gap * 1.6, [255, 0, 255, opacity]);
-  randomHorizLine(5, bigGap * 1.3, [255, 255, 0], opacity);
-  randomVertLine(8, bigGap * 1.1, [0, 255, 255, opacity]);
+  randomFineShape(21, gap * 1.92, sc[0], bottomCnv);
+  randomHorizLine(5, bigGap * 1.3, sc[1], bottomCnv);
+  randomVertLine(8, bigGap * 1.1, sc[2], bottomCnv);
 
-  randomFineShape(8, gap * 0.6, [0, opacity]);
+  randomFineShape(3, gap * 0.3, [255], topCnv);
 
+  image(bottomCnv, 0, 0);
+  image(topCnv, 0, 0);
   noLoop();
 }
 
-function randomFineShape(no, size, fillColour) {
-  noStroke();
-  fill(fillColour);
+function randomFineShape(no, size, fillColour, cnv = null) {
+  cnv.noStroke();
+  cnv.fill(fillColour);
   for (let i = 0; i < no; i++) {
-    const x = floor(random(gridSize));
-    const y = floor(random(gridSize));
-    circle(x * gap + shunt, y * gap + shunt, size);
+    const x = floor(random(gridSize)) * gap + shunt;
+    const y = floor(random(gridSize)) * gap + shunt;
+
+    cnv.circle(x, y, size);
   }
 }
 
-function randomHorizLine(no, weight, fillColour) {
-  noFill();
-  stroke(fillColour);
-  strokeWeight(weight);
+function randomHorizLine(no, weight, fillColour, cnv) {
+  cnv.noFill();
+  cnv.stroke(fillColour);
+  cnv.strokeWeight(weight);
   for (let i = 0; i < no; i++) {
     const x = floor(random((gridSize + 1) / 2));
     const y = floor(random((gridSize + 1) / 2));
     const length = weight * random(ranLength);
     // circle(x * gap + shunt, y * gap + shunt, size);
-    line(
+    cnv.line(
       x * bigGap - length / 2,
       y * bigGap,
       x * bigGap + length / 2,
@@ -59,15 +70,15 @@ function randomHorizLine(no, weight, fillColour) {
   }
 }
 
-function randomVertLine(no, weight, fillColour) {
-  noFill();
-  stroke(fillColour);
-  strokeWeight(weight);
+function randomVertLine(no, weight, fillColour, cnv = null) {
+  cnv.noFill();
+  cnv.stroke(fillColour);
+  cnv.strokeWeight(weight);
   for (let i = 0; i < no; i++) {
     const x = floor(random((gridSize + 1) / 2));
     const y = floor(random((gridSize + 1) / 2));
     const length = weight * random(ranLength);
-    line(
+    cnv.line(
       x * bigGap,
       y * bigGap - length / 2,
       x * bigGap,
@@ -107,6 +118,8 @@ function makeGrids() {
 }
 
 function windowResized() {
+  topCnv.clear();
+  bottomCnv.clear();
   minDim = min(windowWidth, windowHeight) * marginPercentage;
   setSizes();
   resizeCanvas(minDim, minDim);
