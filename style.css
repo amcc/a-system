@@ -65,8 +65,8 @@ button:hover {
 }
 
 button:active {
-  background-color: rgb(200, 200, 200);
-  color: white;
+  /* background-color: rgb(200, 200, 200);
+  color: white; */
   /* add any other styling you want for a clicked button */
 }
 
