@@ -60,13 +60,13 @@ button {
 }
 
 button:hover {
-  background-color: rgb(220, 220, 220);
+  /* background-color: rgb(220, 220, 220); */
   /* add any other styling you want for a hovered button */
 }
 
 button:active {
-  /* background-color: rgb(200, 200, 200);
-  color: white; */
+  background-color: rgb(200, 200, 200);
+  color: white;
   /* add any other styling you want for a clicked button */
 }
 
