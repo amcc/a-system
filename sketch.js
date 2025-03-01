@@ -28,7 +28,7 @@ function setup() {
   createCanvas(minDim, minDim);
   bottomCnv = createGraphics(minDim, minDim);
   topCnv = createGraphics(minDim, minDim);
-  setSizes();
+
   bottomCnv.blendMode(MULTIPLY);
   topCnv.blendMode(BLEND);
 
@@ -43,6 +43,7 @@ function setSizes() {
 }
 
 function makeShapes() {
+  setSizes();
   topCnv.clear();
   bottomCnv.clear();
   randomFineShape(21, gap * 1.92, sc[0], bottomCnv);
