@@ -1,12 +1,76 @@
-html, body {
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@300;400&display=swap");
+
+html,
+body {
   margin: 0;
   padding: 0;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
+
+  font-family: "IBM Plex Sans Condensed", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 canvas {
   display: block;
+  cursor: pointer;
+}
+
+h1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  margin: 0;
+  font-weight: 300;
+  /* border-bottom: 1px solid rgb(100, 255, 255); */
+}
+
+#controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  color: black;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+button {
+  font-family: "IBM Plex Sans Condensed", serif;
+  font-size: 1em;
+
+  padding: 4px 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgb(100, 255, 255);
+  border-right: none;
+  border-left: none;
+  /* border-radius: 5px; */
+  background: #fff;
+  cursor: pointer;
+
+  color: grey;
+  text-align: left;
+}
+
+button:hover {
+  background-color: rgb(220, 220, 220);
+  /* add any other styling you want for a hovered button */
+}
+
+button:active {
+  background-color: rgb(200, 200, 200);
+  color: white;
+  /* add any other styling you want for a clicked button */
+}
+
+.selected {
+  background-color: rgb(100, 255, 255);
+  /* add any other styling you want for a selected button */
 }

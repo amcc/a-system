@@ -8,6 +8,21 @@ const yl = [255, 255, 0, opacity];
 const colours = [mg, cy, yl];
 let bigGap, gap, shunt, minDim, cnv, bottomCnv, topCnv, sc;
 
+let showGrid = false;
+let showGridInput, redrawButton;
+
+// input controls
+showGridInput = document.getElementById("grid");
+showGridInput.addEventListener("click", function () {
+  showGrid = !showGrid;
+  showGridInput.classList.toggle("selected");
+});
+
+redrawButton = document.getElementById("redraw");
+redrawButton.addEventListener("click", function () {
+  makeShapes();
+});
+
 function setup() {
   minDim = min(windowWidth, windowHeight) * marginPercentage;
   createCanvas(minDim, minDim);
@@ -16,6 +31,8 @@ function setup() {
   setSizes();
   bottomCnv.blendMode(MULTIPLY);
   topCnv.blendMode(BLEND);
+
+  makeShapes();
 }
 
 function setSizes() {
@@ -25,20 +42,24 @@ function setSizes() {
   sc = shuffle(colours);
 }
 
-function draw() {
-  background(255);
-
-  // makeGrids();
-
+function makeShapes() {
+  topCnv.clear();
+  bottomCnv.clear();
   randomFineShape(21, gap * 1.92, sc[0], bottomCnv);
   randomHorizLine(5, bigGap * 1.3, sc[1], bottomCnv);
   randomVertLine(8, bigGap * 1.1, sc[2], bottomCnv);
 
   randomFineShape(3, gap * 0.3, [255], topCnv);
+}
+
+function draw() {
+  background(255);
 
   image(bottomCnv, 0, 0);
   image(topCnv, 0, 0);
-  noLoop();
+
+  showGrid && makeGrids();
+  // noLoop();
 }
 
 function randomFineShape(no, size, fillColour, cnv = null) {
@@ -100,8 +121,8 @@ function fineShape() {
 
 function makeGrids() {
   // coarse grid pattern
-  stroke(255, 180, 220);
-  strokeWeight(4);
+  stroke(50, 50, 50);
+  strokeWeight(2);
   for (let x = 0; x < (gridSize + 1) / 2; x++) {
     line(0, bigGap * x, width, bigGap * x);
     line(bigGap * x, 0, bigGap * x, height);
@@ -123,4 +144,5 @@ function windowResized() {
   minDim = min(windowWidth, windowHeight) * marginPercentage;
   setSizes();
   resizeCanvas(minDim, minDim);
+  makeShapes();
 }
