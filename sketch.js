@@ -123,7 +123,7 @@ function fineShape() {
 function makeGrids() {
   // coarse grid pattern
   stroke(50, 50, 50);
-  strokeWeight(2);
+  strokeWeight(1);
   for (let x = 0; x < (gridSize + 1) / 2; x++) {
     line(0, bigGap * x, width, bigGap * x);
     line(bigGap * x, 0, bigGap * x, height);
