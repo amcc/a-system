@@ -153,15 +153,15 @@ function randomVertLine(no, weight, fillColour, cnv = null) {
 
 function makeGrids() {
   // coarse grid pattern
-  stroke(50, 50, 50);
+  stroke(50, 50, 50, 70);
   strokeWeight(1);
-  for (let x = 0; x < (gridSize + 1) / 2; x++) {
+  for (let x = 1; x < gridSize / 2; x++) {
     line(0, bigGap * x, width, bigGap * x);
     line(bigGap * x, 0, bigGap * x, height);
   }
 
   // fine grid pattern
-  stroke(100, 255, 255);
+  stroke(70, 205, 205, 100);
   strokeWeight(1);
 
   for (let x = 0; x < gridSize; x++) {
