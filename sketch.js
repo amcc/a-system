@@ -9,9 +9,27 @@ const colours = [mg, cy, yl];
 let bigGap, gap, shunt, minDim, cnv, bottomCnv, topCnv, sc;
 
 let showGrid = false;
-let showGridInput, redrawButton;
+let v1 = true;
+let v2 = false;
+let showGridInput, redrawButton, v1Button, v2Button;
 
 // input controls
+v1Button = document.getElementById("v1");
+v1Button.addEventListener("click", function () {
+  unSelectVersions();
+  v1 = true;
+  v1Button.classList.toggle("selected");
+  makeShapes();
+});
+
+v2Button = document.getElementById("v2");
+v2Button.addEventListener("click", function () {
+  unSelectVersions();
+  v2 = true;
+  v2Button.classList.toggle("selected");
+  makeShapes();
+});
+
 showGridInput = document.getElementById("grid");
 showGridInput.addEventListener("click", function () {
   showGrid = !showGrid;
@@ -23,9 +41,17 @@ redrawButton.addEventListener("click", function () {
   makeShapes();
 });
 
+function unSelectVersions() {
+  v1 = false;
+  v2 = false;
+  document.getElementById("v1").classList.remove("selected");
+  document.getElementById("v2").classList.remove("selected");
+}
+
 function setup() {
   minDim = min(windowWidth, windowHeight) * marginPercentage;
-  createCanvas(minDim, minDim);
+  const theCanvas = createCanvas(minDim, minDim);
+  theCanvas.mouseClicked(canvasClicked);
   bottomCnv = createGraphics(minDim, minDim);
   topCnv = createGraphics(minDim, minDim);
 
@@ -46,7 +72,8 @@ function makeShapes() {
   setSizes();
   topCnv.clear();
   bottomCnv.clear();
-  randomFineShape(21, gap * 1.92, sc[0], bottomCnv);
+  if (v1) randomFineShape(21, gap * 1.92, sc[0], bottomCnv);
+  if (v2) randomFineShapeZig(21, gap * 1.92, sc[0], bottomCnv);
   randomHorizLine(5, bigGap * 1.3, sc[1], bottomCnv);
   randomVertLine(8, bigGap * 1.1, sc[2], bottomCnv);
 
@@ -71,6 +98,21 @@ function randomFineShape(no, size, fillColour, cnv = null) {
     const y = floor(random(gridSize)) * gap + shunt;
 
     cnv.circle(x, y, size);
+  }
+}
+
+function randomFineShapeZig(no, size, fillColour, cnv = null) {
+  cnv.noStroke();
+  cnv.fill(fillColour);
+  for (let i = 0; i < no; i++) {
+    const x = floor(random(gridSize)) * gap + shunt;
+    const y = floor(random(gridSize)) * gap + shunt;
+    let tl = [x - size / 2, y];
+    let tr = [x + size / 2, y - size / 2];
+    let br = [x + size / 2, y];
+    let bl = [x - size / 2, y + size / 2];
+    cnv.quad(...tl, ...tr, ...br, ...bl);
+    // cnv.circle(x, y, size);
   }
 }
 
@@ -109,17 +151,6 @@ function randomVertLine(no, weight, fillColour, cnv = null) {
   }
 }
 
-function fineShape() {
-  const gap = width / gridSize;
-  noStroke();
-  fill(255, 255, 0, 50);
-  for (let y = 0; y < gridSize; y++) {
-    for (let x = 0; x < gridSize + 1; x++) {
-      circle(x * gap + shunt, y * gap + shunt, bigGap);
-    }
-  }
-}
-
 function makeGrids() {
   // coarse grid pattern
   stroke(50, 50, 50);
@@ -146,4 +177,8 @@ function windowResized() {
   setSizes();
   resizeCanvas(minDim, minDim);
   makeShapes();
+}
+
+function canvasClicked() {
+  saveCanvas("a-system", "png");
 }
