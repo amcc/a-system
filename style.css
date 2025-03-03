@@ -38,7 +38,7 @@ h1 {
   color: black;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 8px;
 }
 
@@ -73,4 +73,12 @@ button:active {
 .selected {
   background-color: rgb(100, 255, 255);
   /* add any other styling you want for a selected button */
+}
+
+@media only screen and (max-width: 600px) {
+  #controls {
+  
+  flex-direction: column;
+  gap: 8px;
+}
 }
