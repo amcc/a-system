@@ -75,7 +75,7 @@ button:active {
   /* add any other styling you want for a selected button */
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
   #controls {
   
   flex-direction: column;
