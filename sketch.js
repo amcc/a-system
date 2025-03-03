@@ -1,3 +1,5 @@
+const outputLimit = 100;
+
 const gridSize = 10;
 const ranLength = [0, 1, 2];
 const marginPercentage = 0.9;
@@ -49,6 +51,7 @@ function unSelectVersions() {
 }
 
 function setup() {
+  frameRate(10);
   minDim = min(windowWidth, windowHeight) * marginPercentage;
   const theCanvas = createCanvas(minDim, minDim);
   theCanvas.mouseClicked(canvasClicked);
@@ -88,6 +91,11 @@ function draw() {
 
   showGrid && makeGrids();
   // noLoop();
+
+  if (frameCount <= outputLimit) {
+    makeShapes();
+    saveCanvas("a-system-" + frameCount, "png");
+  }
 }
 
 function randomFineShape(no, size, fillColour, cnv = null) {
@@ -124,7 +132,6 @@ function randomHorizLine(no, weight, fillColour, cnv) {
     const x = floor(random((gridSize + 1) / 2));
     const y = floor(random((gridSize + 1) / 2));
     const length = weight * random(ranLength);
-    // circle(x * gap + shunt, y * gap + shunt, size);
     cnv.line(
       x * bigGap - length / 2,
       y * bigGap,
@@ -174,7 +181,6 @@ function windowResized() {
   topCnv.clear();
   bottomCnv.clear();
   minDim = min(windowWidth, windowHeight) * marginPercentage;
-  setSizes();
   resizeCanvas(minDim, minDim);
   makeShapes();
 }
